@@ -1,0 +1,64 @@
+<ion-col>
+  <ion-card class="h-100 shadow">
+    <ion-img [routerLink]="['/events', event().id]" [src]="event().image"></ion-img>
+    <ion-card-content>
+      <ion-card-title>
+        <ion-router-link [routerLink]="['/events', event().id]">{{ event().title }}</ion-router-link>
+      </ion-card-title>
+      <p>{{ event().description }}</p>
+      <ng-container>
+        @if (event().mine) {
+        <ion-button [routerLink]="['/events', event().id, 'edit']">Edit</ion-button>
+      }
+      </ng-container>
+      <ion-row>
+        <ng-container>
+          @if (event().mine) {
+          <ion-col>
+            <ion-button color="danger" (click)="deleteEvent()">
+              <ion-icon name="trash"></ion-icon>
+            </ion-button>
+          </ion-col>
+        }
+        </ng-container>
+        <ion-col class="ion-text-end">
+          <div class="attend-users">
+            <ion-icon name="people"></ion-icon> {{ numAttend() }}
+          </div>
+          @if (attend() === true) {
+          <ng-container>
+            <div class="text-success attend-button" (click)="deleteAttend()" tabindex="0" (keydown.enter)="postAttend()">
+              <ion-icon name="thumbs-up"></ion-icon> I'm going
+            </div>
+          </ng-container>
+        } @else {
+          <ng-container>
+            <div class="text-danger attend-button" (click)="postAttend()" tabindex="0" (keydown.enter)="postAttend()">
+              <ion-icon name="thumbs-down"></ion-icon> Not going
+            </div>
+          </ng-container>
+        }
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+    <ion-card-content class="text-muted">
+      <ion-row>
+        <ion-col size="auto" class="avatar">
+          <ion-avatar>
+            <img [src]="event().creator.avatar" />
+          </ion-avatar>
+        </ion-col>
+        <ion-col>
+          <div class="name">
+            <div>{{ event().creator.name }}</div>
+          </div>
+          <div class="date small text-muted">{{ event().date | date : "dd/MM/yyyy" }}</div>
+        </ion-col>
+        <ion-col size="auto" class="ion-text-end text-muted">
+          <div class="price small">{{ event().price | intlCurrency:"EUR":"es-ES" }}</div>
+          <div class="distance small">{{ event().distance.toFixed(2) + " km" }}</div>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+</ion-col>

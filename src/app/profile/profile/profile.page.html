@@ -1,0 +1,30 @@
+
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Profile</ion-title>
+    </ion-toolbar>
+  </ion-header>
+@if (user() === null) {
+  <div class="profile-container">
+    <ion-avatar>
+      <img [src]="user()!.avatar" />
+    </ion-avatar>
+    <h2>{{ user()!.name }}</h2>
+    <p>{{ user()!.email }}</p>
+    <div id="map"></div> <!-- Aquí iría el mapa con la ubicación del usuario -->
+
+    @if (user()!.me === true) {
+    <ion-button>Edit Profile</ion-button>
+    <ion-button>Edit Password</ion-button>
+    }
+
+  </div>
+}
+</ion-content>
