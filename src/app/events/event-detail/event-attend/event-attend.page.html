@@ -1,0 +1,51 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>event-attend</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">event-attend</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- Botones para confirmar o cancelar asistencia -->
+  <ion-item>
+    @if (attend() === false) {
+      <ion-label>You are NOT going to the event</ion-label>
+    <ion-button color="primary" (click)="postAttend()">
+      <ion-icon name="thumbs-up" slot="start"></ion-icon>
+      Confirm Attendance
+    </ion-button>
+  } @else {
+    <ion-label>Your are going to the event</ion-label>
+    <ion-button color="danger" (click)="deleteAttend()">
+      <ion-icon name="thumbs-down" slot="start"></ion-icon>
+      Cancel Attendance
+    </ion-button>
+  }
+  </ion-item>
+
+  <!-- Mostrar la cantidad de personas que asisten -->
+  <ion-item>
+    <ion-icon name="people" slot="start"></ion-icon>
+    <ion-label>Total Attendees: {{ numAttend() }}</ion-label>
+  </ion-item>
+
+  <!-- Lista de usuarios que asisten -->
+  <ion-list>
+    @for (user of users(); track user.id) {
+    <ion-item>
+      <ion-avatar slot="start">
+        <img [src]="user.avatar" />
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ user.name }}</h2>
+        <p>{{ user.email }}</p>
+      </ion-label>
+    </ion-item>
+  }
+  </ion-list>
+</ion-content>

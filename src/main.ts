@@ -1,5 +1,5 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { RouteReuseStrategy, provideRouter, withPreloading, PreloadAllModules } from '@angular/router';
+import { RouteReuseStrategy, provideRouter, withPreloading, PreloadAllModules, withComponentInputBinding } from '@angular/router';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
 import { provideExperimentalZonelessChangeDetection } from '@angular/core';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
@@ -16,7 +16,7 @@ bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
-    provideRouter(routes, withPreloading(PreloadAllModules)),
+    provideRouter(routes, withPreloading(PreloadAllModules), withComponentInputBinding()),
     provideExperimentalZonelessChangeDetection(),
     provideHttpClient(withInterceptors([baseUrlInterceptor, authInterceptor])),
   ],

@@ -1,18 +1,16 @@
 import { Component, OnInit, input, output, inject, signal } from '@angular/core';
 import { MyEvent } from '../interfaces/MyEvent';
 import { EventsService } from '../services/events.service';
-import { IonCol, IonCard, IonImg, IonCardContent, IonCardTitle, IonRouterLink, IonButton, IonIcon, IonRow, IonAvatar } from '@ionic/angular/standalone';
+import { IonCol, IonCard, IonImg, IonCardContent, IonCardTitle, IonRouterLink, IonButton, IonIcon, IonRow, IonAvatar, IonLabel } from '@ionic/angular/standalone';
 import { RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { IntlCurrencyPipe } from '../../shared/pipes/intl-currency.pipe';
-
-
 
 @Component({
   selector: 'event-card',
   templateUrl: './event-card.component.html',
   styleUrls: ['./event-card.component.scss'],
-  imports: [IonCol, IonCard, IonImg, IonCardContent, IonCardTitle, IonRouterLink, IonButton, IonIcon, IonRow, IonAvatar, RouterLink, DatePipe, IntlCurrencyPipe]
+  imports: [IonLabel, IonCol, IonCard, IonImg, IonCardContent, IonCardTitle, IonRouterLink, IonButton, IonIcon, IonRow, IonAvatar, RouterLink, DatePipe, IntlCurrencyPipe]
 })
 export class EventCardComponent implements OnInit {
   event = input.required<MyEvent>();

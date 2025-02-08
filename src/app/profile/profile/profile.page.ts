@@ -11,18 +11,16 @@ import { User } from '../interfaces/user';
   standalone: true,
   imports: [IonAvatar, IonButton, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
 })
-export class ProfilePage implements OnInit {
-  userLoading = input.required<User>();
+export class ProfilePage {
+  user = input.required<User>();
   coordinates = signal<[number, number]>([0, 0]);
-  user = signal<User | null>(null);
+
 
   constructor() {
     effect(() => {
-      this.user.set(this.userLoading());
+
     });
   }
 
-  ngOnInit() {
-    // Aquí puedes hacer otras inicializaciones si es necesario
-  }
+
 }

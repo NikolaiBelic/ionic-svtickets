@@ -15,8 +15,9 @@
         <ng-container>
           @if (event().mine) {
           <ion-col>
-            <ion-button color="danger" (click)="deleteEvent()">
-              <ion-icon name="trash"></ion-icon>
+            <ion-button expand="block" color="danger" (click)="deleteEvent()">
+              <ion-icon name="trash" slot="start"></ion-icon>
+              <ion-label>Delete</ion-label>
             </ion-button>
           </ion-col>
         }
@@ -26,16 +27,16 @@
             <ion-icon name="people"></ion-icon> {{ numAttend() }}
           </div>
           @if (attend() === true) {
-          <ng-container>
-            <div class="text-success attend-button" (click)="deleteAttend()" tabindex="0" (keydown.enter)="postAttend()">
-              <ion-icon name="thumbs-up"></ion-icon> I'm going
-            </div>
-          </ng-container>
+            <ng-container>
+              <ion-button color="success" (click)="deleteAttend()" tabindex="0" (keydown.enter)="postAttend()">
+                <ion-icon name="thumbs-up" slot="start"></ion-icon> I'm going
+              </ion-button>
+            </ng-container>
         } @else {
           <ng-container>
-            <div class="text-danger attend-button" (click)="postAttend()" tabindex="0" (keydown.enter)="postAttend()">
-              <ion-icon name="thumbs-down"></ion-icon> Not going
-            </div>
+            <ion-button color="danger" (click)="postAttend()" tabindex="0" (keydown.enter)="postAttend()">
+              <ion-icon name="thumbs-down" slot="start"></ion-icon> Not going
+            </ion-button>
           </ng-container>
         }
         </ion-col>

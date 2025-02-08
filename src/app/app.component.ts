@@ -6,7 +6,8 @@ import { Platform, IonApp, IonContent, IonIcon, IonItem, IonLabel, IonList, IonM
 import { addIcons } from 'ionicons';
 import { User } from './auth/interfaces/user';
 import { AuthService } from './auth/services/auth.service';
-import { home, logIn, documentText, checkmarkCircle, images, camera, arrowUndoCircle, exit } from 'ionicons/icons';
+import { home, logIn, documentText, checkmarkCircle, images, camera, arrowUndoCircle, exit, chatboxEllipses, informationCircle, trash, thumbsUp, thumbsDown, people, 
+  person, add, navigate } from 'ionicons/icons';
 
 
 @Component({
@@ -24,10 +25,13 @@ export class AppComponent {
 
   public appPages = [
     { title: 'Home', url: '/events', icon: 'home' },
-    { title: 'Profile', url: '/profile/me', icon: 'person' }
+    { title: 'Profile', url: '/profile/me', icon: 'person' },
+    { title: 'New event', url: '/events/add', icon: 'add' }
   ];
   constructor() {
-    addIcons({ home, logIn, documentText, checkmarkCircle, images, camera, arrowUndoCircle, exit });
+    addIcons({ home, logIn, documentText, checkmarkCircle, images, camera, arrowUndoCircle, exit, chatboxEllipses, informationCircle, trash, thumbsUp, thumbsDown, people, 
+      person, add, navigate
+     });
 
     effect(() => {
       if (this.#authService.logged()) {
