@@ -36,8 +36,6 @@ export class HomePage implements OnInit {
   name = signal<string>('');
   finished = false;
 
-  
-
   search = toSignal(this.searchEvents.valueChanges, { initialValue: '' });
 
   /* previousValue: string = this.search()!; */
@@ -45,6 +43,10 @@ export class HomePage implements OnInit {
   constructor() {
     effect(() => {
       this.loadEvents();
+
+      if (this.search() !== '') {
+        this.page.set(1);
+      }
 
       /* const currentValue = this.search();
 

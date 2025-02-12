@@ -34,7 +34,6 @@ export class EventInfoPage implements OnInit {
         {
           text: 'Ok',
           handler: () => {
-            this.#eventsService
             this.deleted.emit();
             this.#nav.navigateRoot(['/events']);
           },
@@ -48,3 +47,5 @@ export class EventInfoPage implements OnInit {
     alert.present();
   }
 }
+
+// belen.sorianoestevez@emeal.nttdata.com

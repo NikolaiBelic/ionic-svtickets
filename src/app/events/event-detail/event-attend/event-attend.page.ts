@@ -6,7 +6,7 @@ import { EventDetailPage } from '../event-detail.page';
 import { EventsService } from '../../services/events.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { User } from 'src/app/profile/interfaces/user';
-import { load } from 'ol/Image';
+import { EventCommunicationService } from '../../services/event-communication.service';
 
 @Component({
   selector: 'event-attend',
@@ -19,6 +19,7 @@ export class EventAttendPage implements OnInit {
   event = inject(EventDetailPage).event;
 
   #eventsService = inject(EventsService);
+  #eventCommunicationService = inject(EventCommunicationService);
 
   attend = signal<boolean>(false);
   #destroyRef = inject(DestroyRef);
@@ -27,13 +28,18 @@ export class EventAttendPage implements OnInit {
   users = signal<User[]>([]);
 
   constructor() {
-    
-  }
-
-  ngOnInit() {
     this.attend.set(this.event()!.attend);
     this.numAttend.set(this.event()!.numAttend);
     this.loadUsers();
+
+    this.#eventCommunicationService.attendChanged$
+      .pipe(takeUntilDestroyed(this.#destroyRef))
+      .subscribe(() => {
+        this.loadUsers();
+      });
+  }
+
+  ngOnInit() {
   }
 
   postAttend() {
@@ -41,6 +47,7 @@ export class EventAttendPage implements OnInit {
       this.attend.set(true);
       this.numAttend.update(num => num + 1);
       this.loadUsers();
+      this.#eventCommunicationService.emitAttendChanged();
     });
   }
 
@@ -49,6 +56,7 @@ export class EventAttendPage implements OnInit {
       this.attend.set(false);
       this.numAttend.update(num => num - 1);
       this.loadUsers();
+      this.#eventCommunicationService.emitAttendChanged();
     });
   }
 

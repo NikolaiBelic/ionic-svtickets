@@ -46,12 +46,12 @@
       <ion-row>
         <ion-col size="auto" class="avatar">
           <ion-avatar>
-            <img [src]="event().creator.avatar" />
+            <a [routerLink]="['/profile', event().creator.id]"><img [src]="event().creator.avatar" /></a>
           </ion-avatar>
         </ion-col>
         <ion-col>
           <div class="name">
-            <div>{{ event().creator.name }}</div>
+            <div class="name"><a [routerLink]="['/profile', event().creator.id]">{{ event().creator.name }}</a></div>
           </div>
           <div class="date small text-muted">{{ event().date | date : "dd/MM/yyyy" }}</div>
         </ion-col>

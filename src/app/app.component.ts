@@ -7,7 +7,7 @@ import { addIcons } from 'ionicons';
 import { User } from './auth/interfaces/user';
 import { AuthService } from './auth/services/auth.service';
 import { home, logIn, documentText, checkmarkCircle, images, camera, arrowUndoCircle, exit, chatboxEllipses, informationCircle, trash, thumbsUp, thumbsDown, people, 
-  person, add, navigate } from 'ionicons/icons';
+  person, add, navigate, image } from 'ionicons/icons';
 
 
 @Component({
@@ -30,7 +30,7 @@ export class AppComponent {
   ];
   constructor() {
     addIcons({ home, logIn, documentText, checkmarkCircle, images, camera, arrowUndoCircle, exit, chatboxEllipses, informationCircle, trash, thumbsUp, thumbsDown, people, 
-      person, add, navigate
+      person, add, navigate, image
      });
 
     effect(() => {

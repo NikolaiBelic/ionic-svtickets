@@ -10,4 +10,40 @@
       <ion-title size="large">event-comments</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <ion-button (click)="openModal()" color="secondary" expand="block">
+    <ion-label>Agregar comentario</ion-label>
+  </ion-button>
+
+  <ion-card>
+    <ion-card-header color="primary">
+      <ion-card-title>User comments</ion-card-title>
+    </ion-card-header>
+    <ion-list>
+      @if (comments().length) {
+      <ng-container>
+        @for (comment of comments(); track comment.id) {
+        <ion-item>
+          <ion-avatar slot="start">
+            <ion-img [src]="comment.user.avatar"></ion-img>
+          </ion-avatar>
+          <ion-label>
+            <h2>
+              <a [routerLink]="['/profile', comment.user.id]">{{ comment.user.name }}</a>
+            </h2>
+            <p>{{ comment.comment }}</p>
+            <p><small>{{ comment.date | date:'dd/MM/yyyy HH:mm' }}</small></p>
+          </ion-label>
+        </ion-item>
+      }
+      </ng-container>
+    } @else {
+      <ng-container>
+        <ion-item>
+          <ion-label>No hay comentarios disponibles.</ion-label>
+        </ion-item>
+      </ng-container>
+    }
+    </ion-list>
+  </ion-card>
 </ion-content>

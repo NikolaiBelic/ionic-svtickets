@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="products"></ion-back-button>
+      <ion-back-button defaultHref="events"></ion-back-button>
     </ion-buttons>
     @if (event()) {
       <ion-title>{{event()!.title}}</ion-title>
@@ -23,10 +23,14 @@
       <ion-icon name="people"></ion-icon>
       <ion-label>Attendees</ion-label>
     </ion-tab-button>
+    @if (event()) {
+    @if (event()!.attend) {
     <ion-tab-button tab="comments">
         <ion-icon name="chatbox-ellipses"></ion-icon>
         <ion-label>Comments</ion-label>
       </ion-tab-button>
+    }
+  }
   </ion-tab-bar>
 </ion-tabs>
 

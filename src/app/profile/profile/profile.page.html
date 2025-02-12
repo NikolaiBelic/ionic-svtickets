@@ -14,16 +14,36 @@
 
   <div class="profile-container">
     <ion-avatar>
-      <img [src]="user().avatar" />
+      <img [src]="image()" />
     </ion-avatar>
+    @if (user().me === true) {
+    <ion-item>
+      <ion-label position="inset">Avatar</ion-label>
+      <ion-button color="secondary" (click)="takePhoto()">
+        <ion-icon name="camera" slot="start"></ion-icon>
+        Camera
+      </ion-button>
+      <ion-button color="tertiary" (click)="pickFromGallery()">
+        <ion-icon name="images" slot="start"></ion-icon>
+        Gallery
+      </ion-button>
+    </ion-item>
+  }
     <h2>{{ user().name }}</h2>
     <p>{{ user().email }}</p>
-    <div id="map"></div> <!-- Aquí iría el mapa con la ubicación del usuario -->
 
     @if (user().me === true) {
-    <ion-button>Edit Profile</ion-button>
-    <ion-button>Edit Password</ion-button>
+    <ion-button (click)="openModalProfile()">Edit Profile</ion-button>
+    <ion-button (click)="openModalPassword()">Edit Password</ion-button>
     }
+
+    <ion-item style="margin-top: 5px;">
+      @if(coords()) {
+      <ol-map [coordinates]="coords()">
+        <ol-marker [coordinates]="coords()"></ol-marker>
+      </ol-map>
+      }
+    </ion-item>
 
   </div>
 

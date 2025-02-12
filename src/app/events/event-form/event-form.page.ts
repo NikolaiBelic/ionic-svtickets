@@ -7,7 +7,6 @@ import { Coordinates } from 'src/app/shared/interfaces/coordinates';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { EventsService } from '../services/events.service';
-import { RouterLink } from '@angular/router';
 import { LaunchNavigator } from '@awesome-cordova-plugins/launch-navigator';
 import { Geolocation } from '@capacitor/geolocation';
 import { SearchResult } from 'src/app/shared/interfaces/search-result';
@@ -20,7 +19,7 @@ import { GaAutocompleteDirective } from '../../shared/directives/ol-maps/ga-auto
   templateUrl: './event-form.page.html',
   styleUrls: ['./event-form.page.scss'],
   standalone: true,
-  imports: [OlMapDirective, OlMarkerDirective, GaAutocompleteDirective, RouterLink, IonInput, IonCol, IonRow, IonGrid, IonImg, IonButton, IonLabel, IonIcon, IonList, IonItem, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [OlMapDirective, OlMarkerDirective, GaAutocompleteDirective, IonInput, IonCol, IonRow, IonGrid, IonImg, IonButton, IonLabel, IonIcon, IonList, IonItem, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
 })
 export class EventFormPage implements OnInit {
   event: MyEventInsert = {
@@ -32,24 +31,24 @@ export class EventFormPage implements OnInit {
     address: '',
     image: '',
     date: ''
-    };
+  };
 
-    #eventsService = inject(EventsService);
-    coords = signal<[number, number]>([-0.5, 38.5]);
-    address = signal<string>('');
-    #changeDetector = inject(ChangeDetectorRef);
-    #destroyRef = inject(DestroyRef);
-    #navCtrl = inject(NavController);
-    #alertCtrl = inject(AlertController);
-    #saved = false;
-    geolocationError: string | null = null;
+  #eventsService = inject(EventsService);
+  coords = signal<[number, number]>([-0.5, 38.5]);
+  address = signal<string>('');
+  #changeDetector = inject(ChangeDetectorRef);
+  #destroyRef = inject(DestroyRef);
+  #navCtrl = inject(NavController);
+  #alertCtrl = inject(AlertController);
+  #saved = false;
+  geolocationError: string | null = null;
 
 
-    validInputId = false;
+  validInputId = false;
 
   constructor() {
     this.requestGeolocationPermission();
-   }
+  }
 
   ngOnInit() {
   }
@@ -68,25 +67,28 @@ export class EventFormPage implements OnInit {
   }
 
 
-  addEvent() {
-        this.#eventsService
-          .insertEvent(this.event)
-          .pipe(takeUntilDestroyed(this.#destroyRef))
-          .subscribe({
-            next: () => this.#navCtrl.navigateRoot(['/events']),
-            error: async (error) => {
-              (
-                await this.#alertCtrl.create({
-                  header: 'Event error',
-                  message: 'Error adding event',
-                  buttons: ['Ok'],
-                })
-              ).present();
-            },
-          });
+  async addEvent() {
+    try {
+      await this.#eventsService.insertEvent(this.event).pipe(takeUntilDestroyed(this.#destroyRef)).toPromise();
+      const alert = await this.#alertCtrl.create({
+        header: 'Event saved',
+        message: 'Your event has been saved',
+        buttons: ['Ok']
+      });
+      await alert.present();
+      this.#navCtrl.navigateRoot(['/events']);
+    } catch (error) {
+      const alert = await this.#alertCtrl.create({
+        header: 'Event error',
+        message: 'Error adding event',
+        buttons: ['Ok']
+      });
+      await alert.present();
     }
+  }
 
-  async takePhoto() {;
+  async takePhoto() {
+    ;
     const photo = await Camera.getPhoto({
       source: CameraSource.Camera,
       quality: 90,

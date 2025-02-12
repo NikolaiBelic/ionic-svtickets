@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Modal Content</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-list-header color="light">
+      Introduce tu comentario
+    </ion-list-header>
+    <ion-textarea [(ngModel)]="comment" placeholder="Escribe tu comentario aquí"></ion-textarea>
+  </ion-list>
+  <ion-button color="primary" expand="block" (click)="postComment()">
+    <ion-label>Enviar</ion-label>
+  </ion-button>
+</ion-content>
