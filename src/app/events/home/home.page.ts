@@ -2,7 +2,7 @@ import { Component, OnInit, signal, input, inject, DestroyRef, effect } from '@a
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonInfiniteScrollContent, IonInfiniteScroll, IonSearchbar } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonInfiniteScrollContent, IonInfiniteScroll, IonSearchbar, IonRefresher, IonRefresherContent } from '@ionic/angular/standalone';
 import { MyEvent } from '../interfaces/MyEvent';
 import { EventsService } from '../services/events.service';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
@@ -16,7 +16,7 @@ import { EventCardComponent } from '../event-card/event-card.component';
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [IonSearchbar, IonInfiniteScroll, IonInfiniteScrollContent, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, EventCardComponent,
+  imports: [IonRefresherContent, IonRefresher, IonSearchbar, IonInfiniteScroll, IonInfiniteScrollContent, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, EventCardComponent,
      ReactiveFormsModule]
 })
 export class HomePage implements OnInit {
@@ -43,6 +43,7 @@ export class HomePage implements OnInit {
   constructor() {
     effect(() => {
       this.loadEvents();
+      this.update();
 
       if (this.search() !== '') {
         this.page.set(1);
@@ -115,5 +116,16 @@ export class HomePage implements OnInit {
       },
       infinite ? 2000 : 0 // En la carga inicial no tardamos nada
     );
+  }
+
+  update() {
+    this.loadEvents();
+  }
+
+  refresh(refresher: IonRefresher) {
+    setTimeout(() => {
+      this.update();
+      refresher.complete();
+    }, 2000);
   }
 }

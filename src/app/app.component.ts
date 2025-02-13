@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, inject, signal } from '@angular/core';
+import { Component, effect, inject, input, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { Platform, IonApp, IonContent, IonIcon, IonItem, IonLabel, IonList, IonMenu, IonMenuToggle, IonRouterLink, IonRouterOutlet, IonSplitPane, IonAvatar, IonImg, NavController } from '@ionic/angular/standalone';
@@ -8,6 +8,8 @@ import { User } from './auth/interfaces/user';
 import { AuthService } from './auth/services/auth.service';
 import { home, logIn, documentText, checkmarkCircle, images, camera, arrowUndoCircle, exit, chatboxEllipses, informationCircle, trash, thumbsUp, thumbsDown, people, 
   person, add, navigate, image } from 'ionicons/icons';
+import { ProfilePage } from './profile/profile/profile.page';
+
 
 
 @Component({

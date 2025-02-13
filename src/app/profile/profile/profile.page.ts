@@ -1,4 +1,4 @@
-import { Component, OnInit, input, signal, effect, inject, ChangeDetectorRef, DestroyRef } from '@angular/core';
+import { Component, OnInit, input, signal, effect, inject, ChangeDetectorRef, DestroyRef, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AlertController, ModalController, IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonAvatar, IonItem, IonIcon, IonLabel } from '@ionic/angular/standalone';
@@ -27,6 +27,7 @@ export class ProfilePage {
   #cdr = inject(ChangeDetectorRef);
   #alertCtrl = inject(AlertController);
   #destroyRef = inject(DestroyRef);
+  profileChanged = signal<boolean>(false);
 
   image = signal<string | null>(null);
 
@@ -45,7 +46,7 @@ export class ProfilePage {
     await modal.present();
     const result = await modal.onDidDismiss();
     if (result.data && result.data.added) {
-
+      this.profileChanged.set(true);
     }
   }
 
@@ -63,6 +64,7 @@ export class ProfilePage {
       this.user().name = result.data.name;
       this.user().email = result.data.email;
       this.#cdr.detectChanges();
+      this.profileChanged.set(true);
     }
   }
 
@@ -107,6 +109,7 @@ export class ProfilePage {
                 buttons: ['Ok'],
               })
             ).present();
+            this.profileChanged.set(true);
           },
           error: (err) => {
             console.error(err, 'Error saving avatar');

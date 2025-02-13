@@ -13,6 +13,10 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <ion-refresher #refresher slot="fixed" (ionRefresh)="refresh(refresher)">
+    <ion-refresher-content>
+    </ion-refresher-content>
+  </ion-refresher>
   <div>{{ count() }}</div>
   <div>{{ page() }}</div>
   @if (events().length) {
